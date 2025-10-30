@@ -1,0 +1,349 @@
+{
+	"info": {
+		"_postman_id": "laboratorios-api-collection",
+		"name": "Sistema de Gestión de Laboratorios API",
+		"description": "Colección de endpoints para el sistema de gestión de laboratorios y resultados de análisis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Autenticación",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@lab.com\",\n    \"contrasena\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/auth/logout",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "auth", "logout"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Crear Usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombreCompleto\": \"Juan Pérez\",\n    \"email\": \"juan@example.com\",\n    \"contrasena\": \"password123\",\n    \"rol\": \"TECNICO\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "usuarios"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Todos los Usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "usuarios"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Usuario por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "usuarios", "1"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombreCompleto\": \"Juan Pérez Actualizado\",\n    \"email\": \"juan@example.com\",\n    \"contrasena\": \"nuevapassword123\",\n    \"rol\": \"ADMINISTRADOR\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "usuarios", "1"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "usuarios", "1"]
+						}
+					}
+				},
+				{
+					"name": "Buscar Usuarios por Rol",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios/rol/TECNICO",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "usuarios", "rol", "TECNICO"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Resultados de Análisis",
+			"item": [
+				{
+					"name": "Crear Resultado",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"usuarioId\": 2,\n    \"laboratorioId\": 1,\n    \"tipoAnalisis\": \"Hemograma Completo\",\n    \"fechaRealizacion\": \"2024-10-20\",\n    \"fechaResultado\": \"2024-10-21\",\n    \"valores\": \"{\\\"Glóbulos Rojos\\\": \\\"4.5 millones/mm³\\\", \\\"Hemoglobina\\\": \\\"14.2 g/dL\\\"}\",\n    \"observaciones\": \"Valores normales\",\n    \"estado\": \"COMPLETADO\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/resultados",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "resultados"]
+						}
+					}
+				},
+				{
+					"name": "Obtener Todos los Resultados (Paginado)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/resultados?page=0&size=10",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "resultados"],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Obtener Resultado por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/resultados/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "resultados", "1"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Resultado",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"usuarioId\": 2,\n    \"laboratorioId\": 1,\n    \"tipoAnalisis\": \"Hemograma Completo Actualizado\",\n    \"fechaRealizacion\": \"2024-10-20\",\n    \"fechaResultado\": \"2024-10-21\",\n    \"valores\": \"{\\\"Glóbulos Rojos\\\": \\\"4.5 millones/mm³\\\", \\\"Hemoglobina\\\": \\\"14.2 g/dL\\\", \\\"Actualizado\\\": true}\",\n    \"observaciones\": \"Resultado actualizado\",\n    \"estado\": \"COMPLETADO\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/resultados/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "resultados", "1"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Resultado",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/resultados/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "resultados", "1"]
+						}
+					}
+				},
+				{
+					"name": "Buscar Resultados por Usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/resultados/usuario/2",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "resultados", "usuario", "2"]
+						}
+					}
+				},
+				{
+					"name": "Buscar Resultados por Laboratorio",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/resultados/laboratorio/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "resultados", "laboratorio", "1"]
+						}
+					}
+				},
+				{
+					"name": "Buscar Resultados por Estado",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/resultados/estado/COMPLETADO",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "resultados", "estado", "COMPLETADO"]
+						}
+					}
+				},
+				{
+					"name": "Buscar Resultados por Tipo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/resultados/tipo?tipo=Hemograma",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "resultados", "tipo"],
+							"query": [
+								{
+									"key": "tipo",
+									"value": "Hemograma"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Buscar Resultados por Rango de Fechas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/resultados/fechas?inicio=2024-10-01&fin=2024-10-31",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "resultados", "fechas"],
+							"query": [
+								{
+									"key": "inicio",
+									"value": "2024-10-01"
+								},
+								{
+									"key": "fin",
+									"value": "2024-10-31"
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}
+
