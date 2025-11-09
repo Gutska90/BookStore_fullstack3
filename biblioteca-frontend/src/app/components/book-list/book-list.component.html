@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="header">
+    <h1>📚 Gestión de Biblioteca</h1>
+    <a routerLink="/crear" class="btn btn-primary">+ Agregar Nuevo Libro</a>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Cargando libros...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error && books.length === 0" class="empty">
+    No hay libros en la biblioteca. ¡Agrega el primero!
+  </div>
+
+  <div *ngIf="!loading && !error && books.length > 0" class="books-grid">
+    <div *ngFor="let book of books" class="book-card">
+      <div class="book-header">
+        <h3>{{ book.titulo }}</h3>
+        <span class="book-id">#{{ book.id }}</span>
+      </div>
+      
+      <div class="book-details">
+        <p><strong>Autor:</strong> {{ book.autor }}</p>
+        <p><strong>Año:</strong> {{ book.anioPublicacion }}</p>
+        <p><strong>Género:</strong> {{ book.genero }}</p>
+      </div>
+
+      <div class="book-actions">
+        <a [routerLink]="['/editar', book.id]" class="btn btn-edit">✏️ Editar</a>
+        <button (click)="deleteBook(book.id)" class="btn btn-delete">🗑️ Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

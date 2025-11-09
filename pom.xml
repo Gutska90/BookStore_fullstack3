@@ -12,11 +12,11 @@
         <relativePath/>
     </parent>
     
-    <groupId>com.laboratorio</groupId>
-    <artifactId>microservicio-laboratorios</artifactId>
-    <version>2.0.0</version>
-    <name>Microservicio Gestión de Laboratorios</name>
-    <description>Sistema de gestión de laboratorios y resultados de análisis clínicos</description>
+    <groupId>com.biblioteca</groupId>
+    <artifactId>microservicio-biblioteca</artifactId>
+    <version>3.0.0</version>
+    <name>Microservicio Biblioteca con Frontend Angular</name>
+    <description>Sistema completo de gestión de biblioteca con backend Spring Boot y frontend Angular</description>
     
     <properties>
         <java.version>17</java.version>
@@ -68,31 +68,6 @@
             <artifactId>caffeine</artifactId>
         </dependency>
         
-        <!-- Spring Boot Starter Security -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        
-        <!-- JWT -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-api</artifactId>
-            <version>0.12.3</version>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-impl</artifactId>
-            <version>0.12.3</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-jackson</artifactId>
-            <version>0.12.3</version>
-            <scope>runtime</scope>
-        </dependency>
-        
         <!-- Lombok (para reducir código boilerplate) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -114,7 +89,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.laboratorio.microservicio.LaboratorioMicroservicioApplication</mainClass>
+                    <mainClass>com.biblioteca.microservicio.BibliotecaMicroservicioApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
