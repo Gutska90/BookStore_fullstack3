@@ -1,202 +1,343 @@
-# 🏥 Sistema de Gestión de Laboratorios y Resultados de Análisis
+# 📚 Sistema de Gestión de Biblioteca - FullStack
 
-## 📋 Descripción del Proyecto
-
-Sistema backend desarrollado en **Spring Boot** para la gestión de laboratorios clínicos y sus resultados de análisis. 
-
-**Actividad Sumativa - Experiencia 1: Programando nuestro BackEnd**
+## 🎯 Actividad Formativa 2
+**"Aplicando un patrón de diseño a nuestro desarrollo"**
 
 ---
 
-## ✅ Microservicios Implementados (2 de 3 requeridos)
+## 📋 Descripción
 
-### 1. 🔐 Microservicio de Control de Usuarios
-- CRUD completo (Crear, Leer, Actualizar, Eliminar)
-- Sistema de inicio de sesión con JWT
-- Gestión de roles: ADMINISTRADOR, TECNICO, PACIENTE
-- Encriptación de contraseñas con BCrypt
+Aplicación web **FullStack** completa para la gestión de libros de una biblioteca, desarrollada con:
 
-### 2. 📊 Microservicio de Gestión de Resultados de Análisis
-- Almacenamiento de resultados
-- Consulta con múltiples filtros
-- CRUD completo
-- Asociación con usuarios y laboratorios
+- **Backend:** Spring Boot 3.2.0 + MySQL/Oracle
+- **Frontend:** Angular 19
+- **Patrón de Diseño:** MVC (Model-View-Controller)
+- **API REST:** Comunicación HTTP entre capas
+
+---
+
+## ✨ Características Principales
+
+### 🔧 Backend (Spring Boot)
+- ✅ API REST completa con CRUD
+- ✅ Conexión a Base de Datos (MySQL/Oracle)
+- ✅ DTOs y validaciones
+- ✅ Manejo de excepciones global
+- ✅ Paginación y ordenamiento
+- ✅ CORS habilitado
+- ✅ Búsquedas avanzadas
+
+### 🎨 Frontend (Angular)
+- ✅ Interfaz moderna y responsive
+- ✅ Lista de libros con tarjetas
+- ✅ Formularios de crear/editar
+- ✅ Validaciones en tiempo real
+- ✅ Navegación con Router
+- ✅ Comunicación HTTP con backend
+- ✅ Manejo de errores
 
 ---
 
 ## 🛠️ Tecnologías Utilizadas
 
-- **Java 17**
-- **Spring Boot 3.2.0**
-- **Spring Data JPA**
-- **Spring Security**
-- **Oracle Database** (Base de datos principal)
-- **JWT** (JSON Web Tokens)
-- **BCrypt** (Encriptación)
-- **Maven**
-
----
-
-## 🚀 Instalación y Ejecución
-
-### 1. Requisitos Previos
-- Java 17+
-- Maven 3.6+
-- Oracle Database 18c+
-
-### 2. Configurar Base de Datos
-
-#### Ejecutar Script SQL en Oracle:
-```bash
-sqlplus usuario/password@servidor @database-setup-laboratorios-oracle.sql
-```
-
-#### Configurar Credenciales en `application.properties`:
-```properties
-spring.datasource.url=jdbc:oracle:thin:@//HOST:PORT/SERVICE_NAME
-spring.datasource.username=TU_USUARIO
-spring.datasource.password=TU_PASSWORD
-```
-
-### 3. Compilar y Ejecutar
-```bash
-mvn clean install
-mvn spring-boot:run
-```
-
-La aplicación estará disponible en: `http://localhost:8080`
-
----
-
-## 📡 Endpoints REST
-
-### 🔐 Autenticación
-- `POST /api/auth/login` - Iniciar sesión (retorna token JWT)
-- `POST /api/auth/logout` - Cerrar sesión
-
-### 👥 Usuarios
-- `POST /api/usuarios` - Crear usuario
-- `GET /api/usuarios` - Listar todos
-- `GET /api/usuarios/{id}` - Obtener por ID
-- `PUT /api/usuarios/{id}` - Actualizar
-- `DELETE /api/usuarios/{id}` - Eliminar
-- `GET /api/usuarios/rol/{rol}` - Buscar por rol
-
-### 📊 Resultados de Análisis
-- `POST /api/resultados` - Crear resultado
-- `GET /api/resultados` - Listar (paginado)
-- `GET /api/resultados/{id}` - Obtener por ID
-- `PUT /api/resultados/{id}` - Actualizar
-- `DELETE /api/resultados/{id}` - Eliminar
-- `GET /api/resultados/usuario/{usuarioId}` - Por usuario
-- `GET /api/resultados/laboratorio/{labId}` - Por laboratorio
-- `GET /api/resultados/estado/{estado}` - Por estado
-- `GET /api/resultados/tipo?tipo=...` - Por tipo de análisis
-- `GET /api/resultados/fechas?inicio=...&fin=...` - Por rango de fechas
-
-### 🏥 Laboratorios
-- `POST /api/laboratorios` - Crear laboratorio
-- `GET /api/laboratorios` - Listar todos
-- `GET /api/laboratorios/{id}` - Obtener por ID
-
----
-
-## 📝 Datos de Prueba
-
-El script SQL incluye:
-
-### Usuarios (3)
-| Email | Contraseña | Rol |
-|-------|------------|-----|
-| admin@lab.com | admin123 | ADMINISTRADOR |
-| tecnico@lab.com | tecnico123 | TECNICO |
-| paciente@lab.com | paciente123 | PACIENTE |
-
-### Laboratorios (3)
-1. Laboratorio Clínico Central
-2. Laboratorio de Patología
-3. Laboratorio de Genética
-
-### Resultados de Análisis (3)
-- Hemograma Completo
-- Biopsia de Tejido
-- Prueba Genética BRCA
-
----
-
-## 🧪 Pruebas con Postman
-
-1. Importar la colección: `Laboratorios-API.postman_collection.json`
-2. Configurar URL base: `http://localhost:8080`
-3. Probar endpoints en el siguiente orden:
-   - Login (obtener token)
-   - Crear/listar usuarios
-   - Crear/listar laboratorios
-   - Crear/consultar resultados
+| Capa | Tecnología | Versión |
+|------|------------|---------|
+| Backend | Java | 17 |
+| Backend | Spring Boot | 3.2.0 |
+| Backend | Spring Data JPA | 3.2.0 |
+| Backend | MySQL | 8.0 |
+| Backend | Maven | 3.9+ |
+| Frontend | Angular | 19 |
+| Frontend | TypeScript | 5.6+ |
+| Frontend | Node.js | 18+ |
 
 ---
 
 ## 📂 Estructura del Proyecto
 
 ```
-src/main/java/com/laboratorio/microservicio/
-├── LaboratorioMicroservicioApplication.java  # Clase principal
-├── config/
-│   └── SecurityConfig.java                   # Spring Security
-├── controller/
-│   ├── AuthController.java                   # Autenticación
-│   ├── UsuarioController.java                # CRUD Usuarios
-│   ├── LaboratorioController.java            # CRUD Laboratorios
-│   └── ResultadoAnalisisController.java      # CRUD Resultados
-├── dto/                                       # Data Transfer Objects
-├── entity/                                    # Entidades JPA
-│   ├── Usuario.java
-│   ├── Laboratorio.java
-│   └── ResultadoAnalisis.java
-├── exception/                                 # Manejo de errores
-├── mapper/                                    # Conversión DTO-Entity
-├── repository/                                # Acceso a datos
-├── service/                                   # Lógica de negocio
-└── util/
-    └── JwtUtil.java                          # Utilidades JWT
+fullstack3/
+│
+├── src/main/java/com/biblioteca/microservicio/
+│   ├── controller/          # Controladores REST
+│   ├── service/             # Lógica de negocio
+│   ├── repository/          # Acceso a datos (JPA)
+│   ├── entity/              # Entidades JPA
+│   ├── dto/                 # Data Transfer Objects
+│   ├── mapper/              # Conversión Entity-DTO
+│   └── exception/           # Manejo de excepciones
+│
+├── biblioteca-frontend/
+│   └── src/app/
+│       ├── components/      # Componentes Angular
+│       ├── services/        # Servicios HTTP
+│       ├── models/          # Modelos de datos
+│       └── app.routes.ts    # Configuración de rutas
+│
+├── database-setup.sql       # Script de base de datos
+├── pom.xml                  # Configuración Maven
+└── README.md                # Este archivo
 ```
+
+---
+
+## 🚀 Inicio Rápido
+
+### 1️⃣ Clonar Repositorio
+```bash
+git clone https://github.com/Gutska90/BookStore_fullstack3.git
+cd fullstack3
+```
+
+### 2️⃣ Configurar Base de Datos
+```sql
+CREATE DATABASE biblioteca_db;
+USE biblioteca_db;
+SOURCE database-setup.sql;
+```
+
+### 3️⃣ Ejecutar Backend
+```bash
+mvn clean install
+mvn spring-boot:run
+```
+✅ Backend: http://localhost:8080
+
+### 4️⃣ Ejecutar Frontend
+```bash
+cd biblioteca-frontend
+npm install
+npm start
+```
+✅ Frontend: http://localhost:4200
+
+---
+
+## 📡 API REST - Endpoints
+
+### Base URL: `http://localhost:8080/api/libros`
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| GET | `/all` | Obtener todos los libros |
+| GET | `/{id}` | Obtener libro por ID |
+| POST | `/` | Crear nuevo libro |
+| PUT | `/{id}` | Actualizar libro |
+| DELETE | `/{id}` | Eliminar libro |
+
+### Ejemplo de Petición
+```bash
+# GET - Obtener todos
+curl http://localhost:8080/api/libros/all
+
+# POST - Crear nuevo
+curl -X POST http://localhost:8080/api/libros \
+  -H "Content-Type: application/json" \
+  -d '{
+    "titulo": "El Principito",
+    "autor": "Antoine de Saint-Exupéry",
+    "anioPublicacion": 1943,
+    "genero": "Fábula"
+  }'
+```
+
+---
+
+## 🏗️ Patrón de Diseño: MVC
+
+### Model (Modelo)
+- `Book.java` - Entidad JPA
+- `book.model.ts` - Modelo TypeScript
+- Define la estructura de datos
+
+### View (Vista)
+- `book-list.component.html` - Lista de libros
+- `book-form.component.html` - Formulario
+- Presentación visual
+
+### Controller (Controlador)
+- `BookController.java` - Endpoints REST
+- `BookService.java` - Lógica de negocio
+- `book.service.ts` - Servicio HTTP Angular
+- Lógica de control
+
+---
+
+## 📊 Base de Datos
+
+### Tabla: books
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| id | BIGINT | ID único (PK) |
+| titulo | VARCHAR(255) | Título del libro |
+| autor | VARCHAR(255) | Autor |
+| anio_publicacion | INT | Año de publicación |
+| genero | VARCHAR(100) | Género literario |
+
+### Datos de Prueba
+- 9 libros precargados
+- Géneros variados
+- Autores clásicos y contemporáneos
+
+---
+
+## 🧪 Pruebas
+
+### Backend
+```bash
+# Probar API
+curl http://localhost:8080/api/libros/all
+
+# Verificar salud
+curl http://localhost:8080/actuator/health
+```
+
+### Frontend
+1. Abrir http://localhost:4200
+2. Verificar lista de libros
+3. Crear nuevo libro
+4. Editar libro existente
+5. Eliminar libro
 
 ---
 
 ## 📚 Documentación Adicional
 
-- `README-ACTIVIDAD-SUMATIVA.md` - Detalles de la actividad
-- `DOCUMENTACION-ACTIVIDAD-SUMATIVA.md` - Especificaciones técnicas
-- `CHECKLIST-ENTREGA.md` - Lista de verificación
-- `VERIFICACION-REQUERIMIENTOS.md` - Cumplimiento de requerimientos
+- 📖 [README-ACTIVIDAD-FORMATIVA-2.md](README-ACTIVIDAD-FORMATIVA-2.md) - Documentación completa
+- 🚀 [INSTRUCCIONES-EJECUCION.md](INSTRUCCIONES-EJECUCION.md) - Guía de instalación
+- 🎨 [FRONTEND-ANGULAR-README.md](FRONTEND-ANGULAR-README.md) - Documentación del frontend
+- 📮 [POSTMAN-COLLECTION-README.md](POSTMAN-COLLECTION-README.md) - Colección Postman
+
+---
+
+## 🔗 Enlaces
+
+- **Repositorio:** https://github.com/Gutska90/BookStore_fullstack3
+- **Backend API:** http://localhost:8080/api/libros
+- **Frontend Web:** http://localhost:4200
 
 ---
 
 ## ✅ Requisitos Cumplidos
 
-- [x] Framework Spring Boot ✅
-- [x] Repositorio Git ✅
-- [x] Conexión a Oracle Database ✅
-- [x] Controladores RESTful (GET, POST, PUT, DELETE) ✅
-- [x] Mínimo 3 registros por tabla ✅
-- [x] Validación con Postman ✅
-- [x] 2 microservicios desarrollados ✅
-- [x] Al menos 2 roles de usuario ✅
-- [x] Caso: Gestión de Laboratorios ✅
+- [x] Aplicación Angular desarrollada
+- [x] Comunicación con microservicio Spring Boot
+- [x] CRUD completo (GET, POST, PUT, DELETE)
+- [x] Muestra todos los atributos del libro
+- [x] Usa URL del microservicio local
+- [x] Patrón MVC implementado
+- [x] Diseño responsive
+- [x] Validaciones implementadas
+- [x] Manejo de errores
+- [x] Documentación completa
 
 ---
 
-## 👨‍💻 Autor
+## 🐛 Solución de Problemas
 
-**Gustavo** - Desarrollo Full Stack
+### Backend no inicia
+```bash
+# Verificar puerto 8080
+lsof -i :8080
+kill -9 [PID]
+```
+
+### Frontend no inicia
+```bash
+# Limpiar caché
+cd biblioteca-frontend
+rm -rf node_modules package-lock.json
+npm install
+```
+
+### Error de conexión a BD
+- Verificar que MySQL esté ejecutándose
+- Revisar credenciales en `application.properties`
+
+---
+
+## 👨‍💻 Desarrollo
+
+### Compilar Backend
+```bash
+mvn clean package
+```
+
+### Compilar Frontend
+```bash
+cd biblioteca-frontend
+npm run build
+```
+
+### Ejecutar Tests
+```bash
+mvn test
+```
+
+---
+
+## 📝 Notas Importantes
+
+1. **Orden de inicio:** Backend primero, luego Frontend
+2. **Base de datos:** Debe estar ejecutándose
+3. **CORS:** Ya configurado en el backend
+4. **Puertos:** 8080 (backend), 4200 (frontend)
+
+---
+
+## 🎓 Información Académica
+
+**Institución:** DuocUC  
+**Asignatura:** Desarrollo de Aplicaciones FullStack  
+**Actividad:** Formativa 2  
+**Tipo:** Individual  
+**Fecha:** Noviembre 2025
+
+---
 
 ## 📄 Licencia
 
-Proyecto académico - Duoc UC
+Este proyecto es de uso académico para la asignatura de Desarrollo FullStack.
 
 ---
 
-**🔗 Repositorio:** https://github.com/Gutska90/BookStore_fullstack3
+## 🤝 Contribuciones
 
-**🎉 ¡Sistema completo y listo para entregar!**
+Proyecto individual desarrollado para actividad formativa.
 
+---
+
+## 📧 Contacto
+
+Para consultas sobre el proyecto, revisar la documentación o contactar al profesor de la asignatura.
+
+---
+
+**🎉 Proyecto FullStack completado exitosamente**
+
+*Sistema de Gestión de Biblioteca - Backend Spring Boot + Frontend Angular*
+
+---
+
+## 🚀 Quick Start
+
+```bash
+# 1. Clonar
+git clone https://github.com/Gutska90/BookStore_fullstack3.git
+cd fullstack3
+
+# 2. Backend
+mvn spring-boot:run
+
+# 3. Frontend (nueva terminal)
+cd biblioteca-frontend
+npm install && npm start
+
+# 4. Abrir navegador
+open http://localhost:4200
+```
+
+---
+
+**✨ ¡Listo para usar!**
