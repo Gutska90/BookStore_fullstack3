@@ -1,0 +1,93 @@
+<div class="container-fluid laboratorios-container">
+  <header class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <h2 class="mb-2 mb-md-0">Gestión de Laboratorios</h2>
+        <button *ngIf="isAdmin()" (click)="toggleForm()" class="btn btn-primary">
+          {{ showForm ? 'Cancelar' : 'Nuevo Laboratorio' }}
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div *ngIf="showForm && isAdmin()" class="row mb-4">
+    <div class="col-12 col-md-8 col-lg-6 mx-auto">
+      <div class="card form-container">
+        <div class="card-body">
+          <h3 class="card-title">{{ editingId ? 'Editar' : 'Nuevo' }} Laboratorio</h3>
+          <form [formGroup]="laboratorioForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label class="form-label">Nombre</label>
+              <input type="text" formControlName="nombre" class="form-control" [class.is-invalid]="laboratorioForm.get('nombre')?.invalid && laboratorioForm.get('nombre')?.touched">
+              <div *ngIf="laboratorioForm.get('nombre')?.invalid && laboratorioForm.get('nombre')?.touched" class="invalid-feedback">
+                El nombre es obligatorio (3-100 caracteres)
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Dirección</label>
+              <input type="text" formControlName="direccion" class="form-control" [class.is-invalid]="laboratorioForm.get('direccion')?.invalid && laboratorioForm.get('direccion')?.touched">
+              <div *ngIf="laboratorioForm.get('direccion')?.invalid && laboratorioForm.get('direccion')?.touched" class="invalid-feedback">
+                La dirección es obligatoria (5-200 caracteres)
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Teléfono</label>
+              <input type="text" formControlName="telefono" class="form-control" [class.is-invalid]="laboratorioForm.get('telefono')?.invalid && laboratorioForm.get('telefono')?.touched">
+              <div *ngIf="laboratorioForm.get('telefono')?.invalid && laboratorioForm.get('telefono')?.touched" class="invalid-feedback">
+                El teléfono es obligatorio y debe tener formato válido
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Tipo</label>
+              <input type="text" formControlName="tipo" class="form-control" [class.is-invalid]="laboratorioForm.get('tipo')?.invalid && laboratorioForm.get('tipo')?.touched">
+              <div *ngIf="laboratorioForm.get('tipo')?.invalid && laboratorioForm.get('tipo')?.touched" class="invalid-feedback">
+                El tipo es obligatorio
+              </div>
+            </div>
+
+            <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+            <div *ngIf="success" class="alert alert-success">{{ success }}</div>
+
+            <button type="submit" class="btn btn-primary" [disabled]="laboratorioForm.invalid || loading">
+              {{ loading ? 'Guardando...' : (editingId ? 'Actualizar' : 'Crear') }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row laboratorios-list">
+    <div class="col-12">
+      <h3 class="mb-4">Lista de Laboratorios ({{ laboratorios.length }})</h3>
+      <div *ngIf="loading" class="text-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Cargando laboratorios...</span>
+        </div>
+      </div>
+      <div *ngIf="!loading && laboratorios.length === 0" class="text-center empty-state">
+        <p>No hay laboratorios registrados</p>
+        <button *ngIf="isAdmin()" (click)="toggleForm()" class="btn btn-primary">Crear primer laboratorio</button>
+      </div>
+      <div class="row">
+        <div *ngFor="let lab of laboratorios" class="col-12 col-md-6 col-lg-4 mb-3">
+          <div class="card laboratorio-card h-100">
+            <div class="card-body">
+              <h4 class="card-title">{{ lab.nombre }}</h4>
+              <p class="card-text"><strong>Tipo:</strong> {{ lab.tipo }}</p>
+              <p class="card-text"><strong>Dirección:</strong> {{ lab.direccion }}</p>
+              <p class="card-text"><strong>Teléfono:</strong> {{ lab.telefono }}</p>
+              <div *ngIf="isAdmin()" class="d-flex gap-2">
+                <button (click)="editarLaboratorio(lab)" class="btn btn-secondary btn-sm">Editar</button>
+                <button (click)="eliminarLaboratorio(lab.id!)" class="btn btn-danger btn-sm">Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

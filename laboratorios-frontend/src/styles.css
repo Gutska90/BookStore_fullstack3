@@ -1,0 +1,527 @@
+/* Estilos globales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+/* Contenedores de formularios */
+.login-container,
+.registro-container,
+.recuperar-container,
+.perfil-container {
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.login-card,
+.registro-card,
+.recuperar-card,
+.perfil-card {
+  width: 100%;
+}
+
+/* Formularios - Usar Bootstrap por defecto */
+.form-label {
+  color: #555;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* Asegurar que el texto no se muestre vertical - Prevenir texto vertical */
+.card-body,
+.form-control,
+.btn,
+.alert,
+a,
+label,
+h1, h2, h3, h4, h5, h6,
+p, span, div {
+  word-wrap: break-word;
+  word-break: normal;
+  white-space: normal !important;
+  writing-mode: horizontal-tb !important;
+  text-orientation: mixed !important;
+  text-align: left;
+  direction: ltr;
+}
+
+/* Asegurar que los contenedores tengan ancho suficiente */
+.login-card,
+.registro-card,
+.recuperar-card,
+.perfil-card {
+  min-width: 300px;
+  max-width: 100%;
+}
+
+/* Prevenir que el texto se rompa en caracteres individuales */
+.card-body * {
+  white-space: normal !important;
+  word-spacing: normal;
+  letter-spacing: normal;
+}
+
+.form-control.is-invalid {
+  border-color: #dc3545;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.alert {
+  padding: 12px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.alert-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* Botones */
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btn-primary {
+  background-color: #667eea;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #5568d3;
+}
+
+.btn-primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* Links */
+.links {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.links a {
+  display: block;
+  color: #667eea;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+/* Dashboard */
+.dashboard-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-nav {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.dashboard-nav a {
+  margin-right: 20px;
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.dashboard-nav a:hover {
+  text-decoration: underline;
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: bold;
+  color: #667eea;
+}
+
+.rol-badge {
+  background: #667eea;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+/* Listas */
+.laboratorios-container,
+.resultados-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.laboratorios-list,
+.resultados-list {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.laboratorio-card,
+.resultado-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+.actions {
+  margin-top: 10px;
+}
+
+.actions .btn {
+  width: auto;
+  margin-right: 10px;
+  margin-top: 0;
+}
+
+.form-container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+.empty-state p {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #667eea;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-spinner p {
+  color: #667eea;
+  font-weight: 500;
+}
+
+.success-message {
+  text-align: center;
+  padding: 20px;
+  background: #d4edda;
+  color: #155724;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - Media Queries
+   Grid de 12 columnas adaptativo para 3 tamaños
+   ============================================ */
+
+/* Móvil: < 576px (Extra Small) */
+@media (max-width: 575.98px) {
+  .container-fluid {
+    padding: 10px;
+  }
+
+  .login-card,
+  .registro-card,
+  .recuperar-card,
+  .perfil-card {
+    padding: 20px;
+    margin: 10px;
+  }
+
+  h1, h2 {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .user-info {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .nav-pills {
+    flex-direction: column;
+  }
+
+  .nav-pills .nav-link {
+    margin-bottom: 5px;
+  }
+
+  .stat-card {
+    margin-bottom: 15px;
+  }
+
+  .laboratorio-card,
+  .resultado-card {
+    margin-bottom: 15px;
+  }
+
+  .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .d-flex.gap-2 {
+    flex-direction: column;
+  }
+
+  .d-flex.gap-2 .btn {
+    width: 100%;
+  }
+}
+
+/* Tablet: 576px - 991.98px (Small y Medium) */
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .container-fluid {
+    padding: 15px;
+  }
+
+  .login-card,
+  .registro-card,
+  .recuperar-card,
+  .perfil-card {
+    padding: 30px;
+  }
+
+  h1, h2 {
+    font-size: 1.75rem;
+  }
+
+  .dashboard-header {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .user-info {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .col-md-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+
+  .stat-card {
+    margin-bottom: 20px;
+  }
+
+  .laboratorio-card,
+  .resultado-card {
+    margin-bottom: 20px;
+  }
+}
+
+/* Desktop: >= 992px (Large y Extra Large) */
+@media (min-width: 992px) {
+  .container-fluid {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .login-card,
+  .registro-card,
+  .recuperar-card,
+  .perfil-card {
+    padding: 40px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .dashboard-header {
+    flex-direction: row;
+  }
+
+  .user-info {
+    flex-direction: row;
+  }
+
+  .col-lg-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+
+  .col-lg-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .col-xl-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+
+  .col-xl-5 {
+    flex: 0 0 41.666667%;
+    max-width: 41.666667%;
+  }
+
+  .stat-card {
+    margin-bottom: 0;
+  }
+
+  .laboratorio-card,
+  .resultado-card {
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    width: auto;
+  }
+}
+
+/* Ajustes adicionales para Grid de 12 columnas */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+[class*="col-"] {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Asegurar que las tarjetas se adapten correctamente */
+.card {
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}

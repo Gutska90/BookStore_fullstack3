@@ -1,0 +1,111 @@
+<div class="container-fluid perfil-container">
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+      <div class="card perfil-card shadow">
+        <div class="card-body">
+          <h2 class="text-center mb-4">Modificar Perfil</h2>
+          
+          <form [formGroup]="perfilForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input 
+                type="email" 
+                id="email" 
+                formControlName="email"
+                class="form-control"
+                [class.is-invalid]="perfilForm.get('email')?.invalid && perfilForm.get('email')?.touched">
+              <div *ngIf="perfilForm.get('email')?.invalid && perfilForm.get('email')?.touched" class="invalid-feedback">
+                <span *ngIf="perfilForm.get('email')?.errors?.['required']">El email es obligatorio</span>
+                <span *ngIf="perfilForm.get('email')?.errors?.['email']">El email debe tener un formato válido</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input 
+                type="text" 
+                id="nombre" 
+                formControlName="nombre"
+                class="form-control"
+                [class.is-invalid]="perfilForm.get('nombre')?.invalid && perfilForm.get('nombre')?.touched">
+              <div *ngIf="perfilForm.get('nombre')?.invalid && perfilForm.get('nombre')?.touched" class="invalid-feedback">
+                <span *ngIf="perfilForm.get('nombre')?.errors?.['required']">El nombre es obligatorio</span>
+                <span *ngIf="perfilForm.get('nombre')?.errors?.['minlength']">El nombre debe tener al menos 2 caracteres</span>
+                <span *ngIf="perfilForm.get('nombre')?.errors?.['maxlength']">El nombre no puede tener más de 50 caracteres</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="apellido" class="form-label">Apellido</label>
+              <input 
+                type="text" 
+                id="apellido" 
+                formControlName="apellido"
+                class="form-control"
+                [class.is-invalid]="perfilForm.get('apellido')?.invalid && perfilForm.get('apellido')?.touched">
+              <div *ngIf="perfilForm.get('apellido')?.invalid && perfilForm.get('apellido')?.touched" class="invalid-feedback">
+                <span *ngIf="perfilForm.get('apellido')?.errors?.['required']">El apellido es obligatorio</span>
+                <span *ngIf="perfilForm.get('apellido')?.errors?.['minlength']">El apellido debe tener al menos 2 caracteres</span>
+                <span *ngIf="perfilForm.get('apellido')?.errors?.['maxlength']">El apellido no puede tener más de 50 caracteres</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <button type="button" class="btn btn-secondary w-100" (click)="togglePasswordFields()">
+                {{ showPasswordFields ? 'Cancelar cambio de contraseña' : 'Cambiar contraseña' }}
+              </button>
+            </div>
+
+            <div *ngIf="showPasswordFields">
+              <div class="mb-3">
+                <label for="password" class="form-label">Nueva Contraseña</label>
+                <input 
+                  type="password" 
+                  id="password" 
+                  formControlName="password"
+                  class="form-control"
+                  [class.is-invalid]="perfilForm.get('password')?.invalid && perfilForm.get('password')?.touched">
+                <div *ngIf="perfilForm.get('password')?.invalid && perfilForm.get('password')?.touched" class="invalid-feedback d-block">
+                  <div *ngIf="passwordErrors['minLength']">{{ passwordErrors['minLength'].message }}</div>
+                  <div *ngIf="passwordErrors['maxLength']">{{ passwordErrors['maxLength'].message }}</div>
+                  <div *ngIf="passwordErrors['uppercase']">{{ passwordErrors['uppercase'].message }}</div>
+                  <div *ngIf="passwordErrors['lowercase']">{{ passwordErrors['lowercase'].message }}</div>
+                  <div *ngIf="passwordErrors['digit']">{{ passwordErrors['digit'].message }}</div>
+                  <div *ngIf="passwordErrors['specialChar']">{{ passwordErrors['specialChar'].message }}</div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirmar Nueva Contraseña</label>
+                <input 
+                  type="password" 
+                  id="confirmPassword" 
+                  formControlName="confirmPassword"
+                  class="form-control"
+                  [class.is-invalid]="perfilForm.get('confirmPassword')?.invalid || (perfilForm.get('password')?.value !== perfilForm.get('confirmPassword')?.value && perfilForm.get('confirmPassword')?.touched)">
+                <div *ngIf="perfilForm.get('password')?.value !== perfilForm.get('confirmPassword')?.value && perfilForm.get('confirmPassword')?.touched" class="invalid-feedback">
+                  Las contraseñas no coinciden
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="error" class="alert alert-danger mb-3">
+              {{ error }}
+            </div>
+
+            <div *ngIf="success" class="alert alert-success mb-3">
+              {{ success }}
+            </div>
+
+            <button 
+              type="submit" 
+              class="btn btn-primary w-100"
+              [disabled]="perfilForm.invalid || loading">
+              {{ loading ? 'Actualizando...' : 'Actualizar Perfil' }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

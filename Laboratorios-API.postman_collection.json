@@ -1,0 +1,503 @@
+{
+  "info": {
+    "name": "Sistema de Gestión de Laboratorios - API",
+    "description": "Colección de Postman para probar los 3 microservicios del Sistema de Gestión de Laboratorios y Resultados de Análisis",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Microservicio Usuarios",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@laboratorios.com\",\n  \"password\": \"Admin123!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Iniciar sesión y obtener token JWT"
+          }
+        },
+        {
+          "name": "Obtener todos los usuarios",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "Token JWT obtenido del login"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/usuarios?page=0&size=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "usuarios"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener usuario por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/usuarios/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "usuarios", "1"]
+            }
+          }
+        },
+        {
+          "name": "Crear usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"nuevo@usuario.com\",\n  \"password\": \"Password123!\",\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Pérez\",\n  \"rol\": \"PACIENTE\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/usuarios",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "usuarios"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar usuario",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"actualizado@usuario.com\",\n  \"password\": \"NuevaPass123!\",\n  \"nombre\": \"Juan Carlos\",\n  \"apellido\": \"Pérez González\",\n  \"rol\": \"PACIENTE\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/usuarios/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "usuarios", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar usuario",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/usuarios/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "usuarios", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Microservicio Laboratorios",
+      "item": [
+        {
+          "name": "Obtener todos los laboratorios",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8082/api/laboratorios?page=0&size=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8082",
+              "path": ["api", "laboratorios"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener laboratorios activos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8082/api/laboratorios/activos?page=0&size=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8082",
+              "path": ["api", "laboratorios", "activos"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener laboratorio por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8082/api/laboratorios/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8082",
+              "path": ["api", "laboratorios", "1"]
+            }
+          }
+        },
+        {
+          "name": "Crear laboratorio",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Laboratorio Clínico Central\",\n  \"direccion\": \"Av. Principal 123, Santiago\",\n  \"telefono\": \"+56 2 2345 6789\",\n  \"tipo\": \"Análisis Clínicos\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/laboratorios",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8082",
+              "path": ["api", "laboratorios"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar laboratorio",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Laboratorio Clínico Central Actualizado\",\n  \"direccion\": \"Av. Principal 456, Santiago\",\n  \"telefono\": \"+56 2 2345 6790\",\n  \"tipo\": \"Análisis Clínicos y Especializados\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/laboratorios/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8082",
+              "path": ["api", "laboratorios", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar laboratorio",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8082/api/laboratorios/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8082",
+              "path": ["api", "laboratorios", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Microservicio Resultados",
+      "item": [
+        {
+          "name": "Obtener todos los resultados",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8083/api/resultados?page=0&size=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8083",
+              "path": ["api", "resultados"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener resultado por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8083/api/resultados/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8083",
+              "path": ["api", "resultados", "1"]
+            }
+          }
+        },
+        {
+          "name": "Obtener resultados por paciente",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8083/api/resultados/paciente/1?page=0&size=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8083",
+              "path": ["api", "resultados", "paciente", "1"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener resultados por laboratorio",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8083/api/resultados/laboratorio/1?page=0&size=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8083",
+              "path": ["api", "resultados", "laboratorio", "1"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear resultado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pacienteId\": 1,\n  \"laboratorioId\": 1,\n  \"tipoAnalisis\": \"Hemograma Completo\",\n  \"resultado\": \"Glóbulos rojos: 4.5 millones/mm³, Glóbulos blancos: 7,000/mm³, Plaquetas: 250,000/mm³\",\n  \"observaciones\": \"Valores dentro del rango normal\",\n  \"fechaAnalisis\": \"2024-11-22T10:00:00\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8083/api/resultados",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8083",
+              "path": ["api", "resultados"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar resultado",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pacienteId\": 1,\n  \"laboratorioId\": 1,\n  \"tipoAnalisis\": \"Hemograma Completo Actualizado\",\n  \"resultado\": \"Glóbulos rojos: 4.6 millones/mm³, Glóbulos blancos: 7,200/mm³, Plaquetas: 255,000/mm³\",\n  \"observaciones\": \"Valores actualizados dentro del rango normal\",\n  \"fechaAnalisis\": \"2024-11-22T14:00:00\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8083/api/resultados/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8083",
+              "path": ["api", "resultados", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar resultado",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8083/api/resultados/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8083",
+              "path": ["api", "resultados", "1"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
+

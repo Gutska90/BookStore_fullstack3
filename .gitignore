@@ -34,10 +34,10 @@ yarn-debug.log*
 yarn-error.log*
 
 # Angular
-biblioteca-frontend/.angular/
-biblioteca-frontend/dist/
-biblioteca-frontend/node_modules/
-biblioteca-frontend/.vscode/
+laboratorios-frontend/.angular/
+laboratorios-frontend/dist/
+laboratorios-frontend/node_modules/
+laboratorios-frontend/.vscode/
 
 # Environment
 .env

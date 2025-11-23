@@ -1,0 +1,108 @@
+<div class="container-fluid resultados-container">
+  <header class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <h2 class="mb-2 mb-md-0">Gestión de Resultados de Análisis</h2>
+        <button *ngIf="isAdmin() || isTecnico()" (click)="toggleForm()" class="btn btn-primary">
+          {{ showForm ? 'Cancelar' : 'Nuevo Resultado' }}
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div *ngIf="showForm && (isAdmin() || isTecnico())" class="row mb-4">
+    <div class="col-12 col-md-8 col-lg-6 mx-auto">
+      <div class="card form-container">
+        <div class="card-body">
+          <h3 class="card-title">{{ editingId ? 'Editar' : 'Nuevo' }} Resultado</h3>
+          <form [formGroup]="resultadoForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label class="form-label">ID Paciente</label>
+              <input type="number" formControlName="pacienteId" class="form-control" [readonly]="!isAdmin()" [class.is-invalid]="resultadoForm.get('pacienteId')?.invalid && resultadoForm.get('pacienteId')?.touched">
+              <div *ngIf="resultadoForm.get('pacienteId')?.invalid && resultadoForm.get('pacienteId')?.touched" class="invalid-feedback">
+                El ID del paciente es obligatorio
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Laboratorio</label>
+              <select formControlName="laboratorioId" class="form-control" [class.is-invalid]="resultadoForm.get('laboratorioId')?.invalid && resultadoForm.get('laboratorioId')?.touched">
+                <option value="">Seleccione un laboratorio</option>
+                <option *ngFor="let lab of laboratorios" [value]="lab.id">{{ lab.nombre }}</option>
+              </select>
+              <div *ngIf="resultadoForm.get('laboratorioId')?.invalid && resultadoForm.get('laboratorioId')?.touched" class="invalid-feedback">
+                El laboratorio es obligatorio
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Tipo de Análisis</label>
+              <input type="text" formControlName="tipoAnalisis" class="form-control" [class.is-invalid]="resultadoForm.get('tipoAnalisis')?.invalid && resultadoForm.get('tipoAnalisis')?.touched">
+              <div *ngIf="resultadoForm.get('tipoAnalisis')?.invalid && resultadoForm.get('tipoAnalisis')?.touched" class="invalid-feedback">
+                El tipo de análisis es obligatorio (3-100 caracteres)
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Resultado</label>
+              <textarea formControlName="resultado" class="form-control" rows="5" [class.is-invalid]="resultadoForm.get('resultado')?.invalid && resultadoForm.get('resultado')?.touched"></textarea>
+              <div *ngIf="resultadoForm.get('resultado')?.invalid && resultadoForm.get('resultado')?.touched" class="invalid-feedback">
+                El resultado es obligatorio
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Observaciones</label>
+              <textarea formControlName="observaciones" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Fecha de Análisis</label>
+              <input type="datetime-local" formControlName="fechaAnalisis" class="form-control">
+            </div>
+
+            <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+            <div *ngIf="success" class="alert alert-success">{{ success }}</div>
+
+            <button type="submit" class="btn btn-primary" [disabled]="resultadoForm.invalid || loading">
+              {{ loading ? 'Guardando...' : (editingId ? 'Actualizar' : 'Crear') }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row resultados-list">
+    <div class="col-12">
+      <h3 class="mb-4">Lista de Resultados ({{ getResultadosFiltrados().length }})</h3>
+      <div *ngIf="loading" class="text-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Cargando resultados...</span>
+        </div>
+      </div>
+      <div *ngIf="!loading && getResultadosFiltrados().length === 0" class="text-center empty-state">
+        <p>No hay resultados registrados</p>
+        <button *ngIf="isAdmin() || isTecnico()" (click)="toggleForm()" class="btn btn-primary">Crear primer resultado</button>
+      </div>
+      <div class="row">
+        <div *ngFor="let resultado of getResultadosFiltrados()" class="col-12 col-md-6 col-lg-4 mb-3">
+          <div class="card resultado-card h-100">
+            <div class="card-body">
+              <h4 class="card-title">{{ resultado.tipoAnalisis }}</h4>
+              <p class="card-text"><strong>Paciente ID:</strong> {{ resultado.pacienteId }}</p>
+              <p class="card-text"><strong>Laboratorio ID:</strong> {{ resultado.laboratorioId }}</p>
+              <p class="card-text"><strong>Resultado:</strong> {{ resultado.resultado }}</p>
+              <p *ngIf="resultado.observaciones" class="card-text"><strong>Observaciones:</strong> {{ resultado.observaciones }}</p>
+              <p class="card-text"><strong>Fecha:</strong> {{ resultado.fechaAnalisis | date:'short' }}</p>
+              <div *ngIf="isAdmin() || isTecnico()" class="d-flex gap-2">
+                <button (click)="editarResultado(resultado)" class="btn btn-secondary btn-sm">Editar</button>
+                <button (click)="eliminarResultado(resultado.id!)" class="btn btn-danger btn-sm">Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

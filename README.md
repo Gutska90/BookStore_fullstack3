@@ -1,343 +1,377 @@
-# 📚 Sistema de Gestión de Biblioteca - FullStack
+# Sistema de Gestión de Laboratorios
 
-## 🎯 Actividad Formativa 2
-**"Aplicando un patrón de diseño a nuestro desarrollo"**
+Sistema completo de gestión de laboratorios y resultados de análisis desarrollado con arquitectura de microservicios, Spring Boot y Angular.
 
----
+## 📋 Tabla de Contenidos
 
-## 📋 Descripción
+- [Características](#características)
+- [Arquitectura](#arquitectura)
+- [Requisitos](#requisitos)
+- [Instalación](#instalación)
+- [Configuración](#configuración)
+- [Ejecución](#ejecución)
+- [Documentación de APIs](#documentación-de-apis)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Endpoints](#endpoints)
+- [Seguridad](#seguridad)
+- [Base de Datos](#base-de-datos)
 
-Aplicación web **FullStack** completa para la gestión de libros de una biblioteca, desarrollada con:
+## 🚀 Características
 
-- **Backend:** Spring Boot 3.2.0 + MySQL/Oracle
-- **Frontend:** Angular 19
-- **Patrón de Diseño:** MVC (Model-View-Controller)
-- **API REST:** Comunicación HTTP entre capas
+### Backend (Microservicios)
+- ✅ **Microservicio de Usuarios**: Gestión de usuarios, autenticación JWT, roles
+- ✅ **Microservicio de Laboratorios**: CRUD completo de laboratorios
+- ✅ **Microservicio de Resultados**: Gestión de resultados de análisis
+- ✅ **Validación de Contraseñas**: 6 validaciones implementadas
+- ✅ **Paginación**: Endpoints con soporte de paginación
+- ✅ **Swagger/OpenAPI**: Documentación automática de APIs
+- ✅ **Seguridad JWT**: Autenticación y autorización con tokens
 
----
+### Frontend (Angular)
+- ✅ **Páginas de Autenticación**: Login, Registro, Recuperar Contraseña
+- ✅ **Páginas Internas**: Dashboard, Perfil, Laboratorios, Resultados
+- ✅ **Validación de Formularios**: Validaciones en tiempo real
+- ✅ **Manejo de Estados**: Loading, errores, confirmaciones
+- ✅ **Responsive Design**: Interfaz adaptable
 
-## ✨ Características Principales
+## 🏗️ Arquitectura
 
-### 🔧 Backend (Spring Boot)
-- ✅ API REST completa con CRUD
-- ✅ Conexión a Base de Datos (MySQL/Oracle)
-- ✅ DTOs y validaciones
-- ✅ Manejo de excepciones global
-- ✅ Paginación y ordenamiento
-- ✅ CORS habilitado
-- ✅ Búsquedas avanzadas
+```
+┌─────────────────┐
+│  Frontend       │
+│  (Angular)      │
+│  Puerto: 4200   │
+└────────┬────────┘
+         │
+         ├─────────────────┬─────────────────┐
+         │                 │                 │
+┌────────▼────────┐ ┌─────▼──────┐ ┌───────▼──────┐
+│ Microservicio   │ │Microservicio│ │ Microservicio│
+│   Usuarios      │ │Laboratorios │ │  Resultados  │
+│   Puerto: 8081  │ │ Puerto: 8082│ │ Puerto: 8083 │
+└────────┬────────┘ └─────┬──────┘ └───────┬──────┘
+         │                 │                 │
+         └─────────────────┴─────────────────┘
+                           │
+                  ┌────────▼────────┐
+                  │  Oracle DB     │
+                  │  Puerto: 1521   │
+                  └─────────────────┘
+```
 
-### 🎨 Frontend (Angular)
-- ✅ Interfaz moderna y responsive
-- ✅ Lista de libros con tarjetas
-- ✅ Formularios de crear/editar
-- ✅ Validaciones en tiempo real
-- ✅ Navegación con Router
-- ✅ Comunicación HTTP con backend
-- ✅ Manejo de errores
+## 📦 Requisitos
 
----
+- **Java**: 17 o superior
+- **Maven**: 3.6 o superior
+- **Node.js**: 18 o superior
+- **npm**: 9 o superior
+- **Oracle Database**: 21c o superior (o usar Docker)
+- **Docker** (opcional): Para ejecutar Oracle y los microservicios
 
-## 🛠️ Tecnologías Utilizadas
+## 🔧 Instalación
 
-| Capa | Tecnología | Versión |
-|------|------------|---------|
-| Backend | Java | 17 |
-| Backend | Spring Boot | 3.2.0 |
-| Backend | Spring Data JPA | 3.2.0 |
-| Backend | MySQL | 8.0 |
-| Backend | Maven | 3.9+ |
-| Frontend | Angular | 19 |
-| Frontend | TypeScript | 5.6+ |
-| Frontend | Node.js | 18+ |
+### 1. Clonar el Repositorio
 
----
+```bash
+git clone <url-del-repositorio>
+cd fullstack3
+```
 
-## 📂 Estructura del Proyecto
+### 2. Configurar Base de Datos Oracle
+
+#### Opción A: Oracle Local
+
+1. Instalar Oracle Database 21c
+2. Crear usuario y base de datos
+3. Ejecutar el script SQL:
+
+```bash
+sqlplus SYSTEM/Oracle123@localhost:1521/XEPDB1 @database-laboratorios-setup.sql
+```
+
+#### Opción B: Oracle con Docker
+
+```bash
+docker run -d --name oracle-db \
+  -p 1521:1521 \
+  -e ORACLE_PWD=Oracle123 \
+  container-registry.oracle.com/database/express:21.3.0-xe
+```
+
+### 3. Compilar Microservicios
+
+```bash
+# Microservicio de Usuarios
+cd microservicio-usuarios
+mvn clean package -DskipTests
+
+# Microservicio de Laboratorios
+cd ../microservicio-laboratorios
+mvn clean package -DskipTests
+
+# Microservicio de Resultados
+cd ../microservicio-resultados
+mvn clean package -DskipTests
+```
+
+### 4. Instalar Dependencias del Frontend
+
+```bash
+cd ../laboratorios-frontend
+npm install
+```
+
+## ⚙️ Configuración
+
+### Configuración de Base de Datos
+
+Editar `application.properties` en cada microservicio:
+
+```properties
+spring.datasource.url=jdbc:oracle:thin:@//localhost:1521/XEPDB1
+spring.datasource.username=SYSTEM
+spring.datasource.password=Oracle123
+```
+
+### Configuración de JWT
+
+El secreto JWT está configurado en `application.properties`:
+
+```properties
+jwt.secret=laboratorios-secret-key-para-jwt-token-generacion-segura-2024
+jwt.expiration=86400000
+```
+
+**⚠️ IMPORTANTE**: En producción, cambiar el secreto JWT por uno seguro.
+
+## 🚀 Ejecución
+
+### Opción 1: Ejecución Manual
+
+#### Iniciar Microservicios
+
+```bash
+# Terminal 1 - Microservicio Usuarios
+cd microservicio-usuarios
+mvn spring-boot:run
+
+# Terminal 2 - Microservicio Laboratorios
+cd microservicio-laboratorios
+mvn spring-boot:run
+
+# Terminal 3 - Microservicio Resultados
+cd microservicio-resultados
+mvn spring-boot:run
+```
+
+#### Iniciar Frontend
+
+```bash
+cd laboratorios-frontend
+ng serve
+```
+
+### Opción 2: Docker Compose
+
+```bash
+# Construir y ejecutar todos los servicios
+docker-compose up -d
+
+# Ver logs
+docker-compose logs -f
+
+# Detener servicios
+docker-compose down
+```
+
+## 📚 Documentación de APIs
+
+Una vez iniciados los microservicios, accede a la documentación Swagger:
+
+- **Usuarios**: http://localhost:8081/swagger-ui.html
+- **Laboratorios**: http://localhost:8082/swagger-ui.html
+- **Resultados**: http://localhost:8083/swagger-ui.html
+
+### Endpoints JSON:
+
+- **Usuarios**: http://localhost:8081/api-docs
+- **Laboratorios**: http://localhost:8082/api-docs
+- **Resultados**: http://localhost:8083/api-docs
+
+## 📁 Estructura del Proyecto
 
 ```
 fullstack3/
+├── microservicio-usuarios/          # Microservicio de usuarios y autenticación
+│   ├── src/main/java/
+│   │   └── com/laboratorios/usuarios/
+│   │       ├── controller/         # Controladores REST
+│   │       ├── service/             # Lógica de negocio
+│   │       ├── repository/          # Acceso a datos
+│   │       ├── entity/              # Entidades JPA
+│   │       ├── dto/                 # Data Transfer Objects
+│   │       ├── config/              # Configuraciones (Security, Swagger)
+│   │       └── exception/           # Manejo de excepciones
+│   └── pom.xml
 │
-├── src/main/java/com/biblioteca/microservicio/
-│   ├── controller/          # Controladores REST
-│   ├── service/             # Lógica de negocio
-│   ├── repository/          # Acceso a datos (JPA)
-│   ├── entity/              # Entidades JPA
-│   ├── dto/                 # Data Transfer Objects
-│   ├── mapper/              # Conversión Entity-DTO
-│   └── exception/           # Manejo de excepciones
+├── microservicio-laboratorios/      # Microservicio de laboratorios
+│   └── [estructura similar]
 │
-├── biblioteca-frontend/
-│   └── src/app/
-│       ├── components/      # Componentes Angular
-│       ├── services/        # Servicios HTTP
-│       ├── models/          # Modelos de datos
-│       └── app.routes.ts    # Configuración de rutas
+├── microservicio-resultados/         # Microservicio de resultados
+│   └── [estructura similar]
 │
-├── database-setup.sql       # Script de base de datos
-├── pom.xml                  # Configuración Maven
-└── README.md                # Este archivo
+├── laboratorios-frontend/            # Frontend Angular
+│   ├── src/app/
+│   │   ├── components/              # Componentes Angular
+│   │   ├── services/                # Servicios HTTP
+│   │   ├── models/                  # Modelos TypeScript
+│   │   ├── guards/                  # Guards de autenticación
+│   │   └── validators/               # Validadores personalizados
+│   └── package.json
+│
+├── database-laboratorios-setup.sql   # Script de base de datos
+├── docker-compose.yml                # Configuración Docker
+└── README.md                         # Este archivo
 ```
 
----
+## 🔌 Endpoints Principales
 
-## 🚀 Inicio Rápido
+### Microservicio de Usuarios (Puerto 8081)
 
-### 1️⃣ Clonar Repositorio
-```bash
-git clone https://github.com/Gutska90/BookStore_fullstack3.git
-cd fullstack3
+```
+POST   /api/auth/login              # Iniciar sesión
+GET    /api/usuarios                # Listar usuarios (paginado)
+GET    /api/usuarios/{id}           # Obtener usuario por ID
+POST   /api/usuarios                # Crear usuario
+PUT    /api/usuarios/{id}           # Actualizar usuario
+DELETE /api/usuarios/{id}           # Eliminar usuario
 ```
 
-### 2️⃣ Configurar Base de Datos
-```sql
-CREATE DATABASE biblioteca_db;
-USE biblioteca_db;
-SOURCE database-setup.sql;
+### Microservicio de Laboratorios (Puerto 8082)
+
+```
+GET    /api/laboratorios            # Listar laboratorios (paginado)
+GET    /api/laboratorios/activos    # Listar activos (paginado)
+GET    /api/laboratorios/{id}       # Obtener por ID
+POST   /api/laboratorios            # Crear laboratorio
+PUT    /api/laboratorios/{id}       # Actualizar laboratorio
+DELETE /api/laboratorios/{id}       # Eliminar laboratorio
 ```
 
-### 3️⃣ Ejecutar Backend
-```bash
-mvn clean install
-mvn spring-boot:run
+### Microservicio de Resultados (Puerto 8083)
+
 ```
-✅ Backend: http://localhost:8080
-
-### 4️⃣ Ejecutar Frontend
-```bash
-cd biblioteca-frontend
-npm install
-npm start
-```
-✅ Frontend: http://localhost:4200
-
----
-
-## 📡 API REST - Endpoints
-
-### Base URL: `http://localhost:8080/api/libros`
-
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| GET | `/all` | Obtener todos los libros |
-| GET | `/{id}` | Obtener libro por ID |
-| POST | `/` | Crear nuevo libro |
-| PUT | `/{id}` | Actualizar libro |
-| DELETE | `/{id}` | Eliminar libro |
-
-### Ejemplo de Petición
-```bash
-# GET - Obtener todos
-curl http://localhost:8080/api/libros/all
-
-# POST - Crear nuevo
-curl -X POST http://localhost:8080/api/libros \
-  -H "Content-Type: application/json" \
-  -d '{
-    "titulo": "El Principito",
-    "autor": "Antoine de Saint-Exupéry",
-    "anioPublicacion": 1943,
-    "genero": "Fábula"
-  }'
+GET    /api/resultados              # Listar resultados (paginado)
+GET    /api/resultados/{id}         # Obtener por ID
+GET    /api/resultados/paciente/{id} # Por paciente (paginado)
+GET    /api/resultados/laboratorio/{id} # Por laboratorio (paginado)
+POST   /api/resultados              # Crear resultado
+PUT    /api/resultados/{id}         # Actualizar resultado
+DELETE /api/resultados/{id}         # Eliminar resultado
 ```
 
----
+## 🔐 Seguridad
 
-## 🏗️ Patrón de Diseño: MVC
+### Autenticación JWT
 
-### Model (Modelo)
-- `Book.java` - Entidad JPA
-- `book.model.ts` - Modelo TypeScript
-- Define la estructura de datos
+1. **Login**: Obtener token desde `/api/auth/login`
+2. **Uso del Token**: Incluir en header `Authorization: Bearer <token>`
+3. **Validación**: Los microservicios de Laboratorios y Resultados validan el token automáticamente
 
-### View (Vista)
-- `book-list.component.html` - Lista de libros
-- `book-form.component.html` - Formulario
-- Presentación visual
+### Roles de Usuario
 
-### Controller (Controlador)
-- `BookController.java` - Endpoints REST
-- `BookService.java` - Lógica de negocio
-- `book.service.ts` - Servicio HTTP Angular
-- Lógica de control
+- **ADMINISTRADOR**: Acceso completo al sistema
+- **PACIENTE**: Puede ver sus propios resultados
+- **TECNICO_LABORATORIO**: Puede gestionar resultados
 
----
+### Validaciones de Contraseña
 
-## 📊 Base de Datos
+Las contraseñas deben cumplir:
+1. ✅ Mínimo 8 caracteres
+2. ✅ Máximo 50 caracteres
+3. ✅ Al menos una letra mayúscula
+4. ✅ Al menos una letra minúscula
+5. ✅ Al menos un número
+6. ✅ Al menos un carácter especial (!@#$%^&*)
 
-### Tabla: books
+## 💾 Base de Datos
 
-| Campo | Tipo | Descripción |
-|-------|------|-------------|
-| id | BIGINT | ID único (PK) |
-| titulo | VARCHAR(255) | Título del libro |
-| autor | VARCHAR(255) | Autor |
-| anio_publicacion | INT | Año de publicación |
-| genero | VARCHAR(100) | Género literario |
+### Tablas
 
-### Datos de Prueba
-- 9 libros precargados
-- Géneros variados
-- Autores clásicos y contemporáneos
+- **USUARIOS**: Información de usuarios y autenticación
+- **LABORATORIOS**: Información de laboratorios
+- **RESULTADOS**: Resultados de análisis
 
----
+### Script SQL
+
+El archivo `database-laboratorios-setup.sql` contiene:
+- Creación de tablas
+- Secuencias para IDs
+- Triggers automáticos
+- Índices para optimización
+- Datos iniciales (3 laboratorios de ejemplo)
 
 ## 🧪 Pruebas
 
-### Backend
-```bash
-# Probar API
-curl http://localhost:8080/api/libros/all
+### Probar APIs con Postman
 
-# Verificar salud
-curl http://localhost:8080/actuator/health
-```
+1. Importar la colección de Postman (si está disponible)
+2. Configurar variables de entorno:
+   - `base_url_usuarios`: http://localhost:8081
+   - `base_url_laboratorios`: http://localhost:8082
+   - `base_url_resultados`: http://localhost:8083
+3. Ejecutar flujo completo:
+   - Login → Obtener token
+   - Usar token en requests a Laboratorios y Resultados
 
-### Frontend
-1. Abrir http://localhost:4200
-2. Verificar lista de libros
-3. Crear nuevo libro
-4. Editar libro existente
-5. Eliminar libro
+### Probar Frontend
 
----
-
-## 📚 Documentación Adicional
-
-- 📖 [README-ACTIVIDAD-FORMATIVA-2.md](README-ACTIVIDAD-FORMATIVA-2.md) - Documentación completa
-- 🚀 [INSTRUCCIONES-EJECUCION.md](INSTRUCCIONES-EJECUCION.md) - Guía de instalación
-- 🎨 [FRONTEND-ANGULAR-README.md](FRONTEND-ANGULAR-README.md) - Documentación del frontend
-- 📮 [POSTMAN-COLLECTION-README.md](POSTMAN-COLLECTION-README.md) - Colección Postman
-
----
-
-## 🔗 Enlaces
-
-- **Repositorio:** https://github.com/Gutska90/BookStore_fullstack3
-- **Backend API:** http://localhost:8080/api/libros
-- **Frontend Web:** http://localhost:4200
-
----
-
-## ✅ Requisitos Cumplidos
-
-- [x] Aplicación Angular desarrollada
-- [x] Comunicación con microservicio Spring Boot
-- [x] CRUD completo (GET, POST, PUT, DELETE)
-- [x] Muestra todos los atributos del libro
-- [x] Usa URL del microservicio local
-- [x] Patrón MVC implementado
-- [x] Diseño responsive
-- [x] Validaciones implementadas
-- [x] Manejo de errores
-- [x] Documentación completa
-
----
+1. Acceder a http://localhost:4200
+2. Registrar un nuevo usuario
+3. Iniciar sesión
+4. Navegar por las diferentes secciones
 
 ## 🐛 Solución de Problemas
 
-### Backend no inicia
-```bash
-# Verificar puerto 8080
-lsof -i :8080
-kill -9 [PID]
-```
+### Error de Conexión a Base de Datos
 
-### Frontend no inicia
-```bash
-# Limpiar caché
-cd biblioteca-frontend
-rm -rf node_modules package-lock.json
-npm install
-```
+- Verificar que Oracle esté ejecutándose
+- Verificar credenciales en `application.properties`
+- Verificar que el puerto 1521 esté disponible
 
-### Error de conexión a BD
-- Verificar que MySQL esté ejecutándose
-- Revisar credenciales en `application.properties`
+### Error de Compilación
 
----
+- Verificar versión de Java: `java -version` (debe ser 17+)
+- Limpiar y recompilar: `mvn clean install`
 
-## 👨‍💻 Desarrollo
+### Error de CORS
 
-### Compilar Backend
-```bash
-mvn clean package
-```
+- Los microservicios tienen `@CrossOrigin(origins = "*")` configurado
+- Si persiste, verificar configuración de proxy en Angular
 
-### Compilar Frontend
-```bash
-cd biblioteca-frontend
-npm run build
-```
+## 📝 Notas Adicionales
 
-### Ejecutar Tests
-```bash
-mvn test
-```
+- Los microservicios usan la misma base de datos Oracle
+- El frontend se comunica con los 3 microservicios
+- Swagger está disponible en todos los microservicios
+- La paginación está habilitada en endpoints de listado (tamaño por defecto: 10)
 
----
+## 👥 Contribución
 
-## 📝 Notas Importantes
-
-1. **Orden de inicio:** Backend primero, luego Frontend
-2. **Base de datos:** Debe estar ejecutándose
-3. **CORS:** Ya configurado en el backend
-4. **Puertos:** 8080 (backend), 4200 (frontend)
-
----
-
-## 🎓 Información Académica
-
-**Institución:** DuocUC  
-**Asignatura:** Desarrollo de Aplicaciones FullStack  
-**Actividad:** Formativa 2  
-**Tipo:** Individual  
-**Fecha:** Noviembre 2025
-
----
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
 
 ## 📄 Licencia
 
-Este proyecto es de uso académico para la asignatura de Desarrollo FullStack.
-
----
-
-## 🤝 Contribuciones
-
-Proyecto individual desarrollado para actividad formativa.
-
----
+Este proyecto es parte de una actividad formativa académica.
 
 ## 📧 Contacto
 
-Para consultas sobre el proyecto, revisar la documentación o contactar al profesor de la asignatura.
+Para preguntas o soporte, contactar al equipo de desarrollo.
 
 ---
 
-**🎉 Proyecto FullStack completado exitosamente**
-
-*Sistema de Gestión de Biblioteca - Backend Spring Boot + Frontend Angular*
-
----
-
-## 🚀 Quick Start
-
-```bash
-# 1. Clonar
-git clone https://github.com/Gutska90/BookStore_fullstack3.git
-cd fullstack3
-
-# 2. Backend
-mvn spring-boot:run
-
-# 3. Frontend (nueva terminal)
-cd biblioteca-frontend
-npm install && npm start
-
-# 4. Abrir navegador
-open http://localhost:4200
-```
-
----
-
-**✨ ¡Listo para usar!**
+**Desarrollado con ❤️ usando Spring Boot y Angular**
